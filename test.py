@@ -9,7 +9,7 @@
 
 =COUNTIFS(D2:D883, "<=-0.1", G2:G883, "<=-0.1", J2:J883, "<=-0.1")
 
-=IF(AND(D2<0, G2<0, J2<0), A2, "")
+=IF(AND(D2<=-0.1, G2<=-0.1, J2<=-0.1), A2, "")
 
 Sub FindRowsWithNegativeValues()
     Dim ws As Worksheet
