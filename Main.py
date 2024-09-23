@@ -13,3 +13,13 @@ Traceback (most recent call last):
   File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 166, in _write
     f.write(compatify(file_content))
 OSError: [Errno 28] No space left on device
+
+
+
+
+
+
+
+  File "/mnt/diskb/penglong/dx/code/SR/utils/metrics.py", line 151, in make_patches
+    output1 = output.unfold(2,patch_size*8,stride*8).unfold(3,patch_size*8,stride*8).contiguous()
+RuntimeError: maximum size for tensor at dimension 2 is 80 but size is 384
