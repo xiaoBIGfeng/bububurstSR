@@ -1,39 +1,15 @@
-from Diffusion.Train import train, eval
-
-
-def main(model_config = None):
-    modelConfig = {
-        "state": "train", # or eval
-        "epoch": 200,
-        "batch_size": 80,
-        "T": 1000,
-        "channel": 128,
-        "channel_mult": [1, 2, 3, 4],
-        "attn": [2],
-        "num_res_blocks": 2,
-        "dropout": 0.15,
-        "lr": 1e-4,
-        "multiplier": 2.,
-        "beta_1": 1e-4,
-        "beta_T": 0.02,
-        "img_size": 32,
-        "grad_clip": 1.,
-        "device": "cuda:0", ### MAKE SURE YOU HAVE A GPU !!!
-        "training_load_weight": None,
-        "save_weight_dir": "./Checkpoints/",
-        "test_load_weight": "ckpt_199_.pt",
-        "sampled_dir": "./SampledImgs/",
-        "sampledNoisyImgName": "NoisyNoGuidenceImgs.png",
-        "sampledImgName": "SampledNoGuidenceImgs.png",
-        "nrow": 8
-        }
-    if model_config is not None:
-        modelConfig = model_config
-    if modelConfig["state"] == "train":
-        train(modelConfig)
-    else:
-        eval(modelConfig)
-
-
-if __name__ == '__main__':
-    main()
+Exception in thread Thread-4:                                                                                                                                      
+Traceback (most recent call last):
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/tensorboard/summary/writer/event_file_writer.py", line 233, in run
+    self._record_writer.write(data)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/tensorboard/summary/writer/record_writer.py", line 40, in write
+    self._writer.write(header + header_crc + data + footer_crc)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 766, in write
+    self.fs.append(self.filename, file_content, self.binary_mode)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 160, in append
+    self._write(filename, file_content, "ab" if binary_mode else "a")
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/tensorboard/compat/tensorflow_stub/io/gfile.py", line 166, in _write
+    f.write(compatify(file_content))
+OSError: [Errno 28] No space left on device
