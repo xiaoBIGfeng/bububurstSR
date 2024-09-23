@@ -1,45 +1,31 @@
-import logging
-import torch
-from os import path as osp
+import pandas as pd
 
-from basicsr.data import build_dataloader, build_dataset
-from basicsr.models import build_model
-from basicsr.utils import get_env_info, get_root_logger, get_time_str, make_exp_dirs
-from basicsr.utils.options import dict2str, parse_options
+# 读取Excel文件
+file_path = 'your_file.xlsx'  # 请替换为您的文件路径
+df = pd.read_excel(file_path)
 
+# 初始化计数器
+count_negative_4 = 0
+count_negative_7 = 0
+count_negative_10 = 0
+count_all_negative = 0
 
-def test_pipeline(root_path):
-    # parse options, set distributed setting, set ramdom seed
-    opt, _ = parse_options(root_path, is_train=False)
+# 遍历第2行到第883行的数据
+for index, row in df.iterrows():
+    if index >= 1 and index <= 882:
+        # 检查第4列、第7列、第10列的值是否小于0
+        if row[3] < 0:
+            count_negative_4 += 1
+        if row[6] < 0:
+            count_negative_7 += 1
+        if row[9] < 0:
+            count_negative_10 += 1
+        # 检查这三列的值是否都小于0
+        if row[3] < 0 and row[6] < 0 and row[9] < 0:
+            count_all_negative += 1
 
-    torch.backends.cudnn.benchmark = True
-    # torch.backends.cudnn.deterministic = True
-
-    # mkdir and initialize loggers
-    make_exp_dirs(opt)
-    log_file = osp.join(opt['path']['log'], f"test_{opt['name']}_{get_time_str()}.log")
-    logger = get_root_logger(logger_name='basicsr', log_level=logging.INFO, log_file=log_file)
-    logger.info(get_env_info())
-    logger.info(dict2str(opt))
-
-    # create test dataset and dataloader
-    test_loaders = []
-    for _, dataset_opt in sorted(opt['datasets'].items()):
-        test_set = build_dataset(dataset_opt)
-        test_loader = build_dataloader(
-            test_set, dataset_opt, num_gpu=opt['num_gpu'], dist=opt['dist'], sampler=None, seed=opt['manual_seed'])
-        logger.info(f"Number of test images in {dataset_opt['name']}: {len(test_set)}")
-        test_loaders.append(test_loader)
-
-    # create model
-    model = build_model(opt)
-
-    for test_loader in test_loaders:
-        test_set_name = test_loader.dataset.opt['name']
-        logger.info(f'Testing {test_set_name}...')
-        model.validation(test_loader, current_iter=opt['name'], tb_logger=None, save_img=opt['val']['save_img'])
-
-
-if __name__ == '__main__':
-    root_path = osp.abspath(osp.join(__file__, osp.pardir, osp.pardir))
-    test_pipeline(root_path)
+# 输出结果
+print(f"第4列中元素值小于0的个数: {count_negative_4}")
+print(f"第7列中元素值小于0的个数: {count_negative_7}")
+print(f"第10列中元素值小于0的个数: {count_negative_10}")
+print(f"存在某一行，该行这三列的值都小于0的行数: {count_all_negative}")
