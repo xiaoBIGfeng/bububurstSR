@@ -1,3 +1,11 @@
+    model.load_state_dict(checkpoint["state_dict"])
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1667, in load_state_dict
+    raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
+RuntimeError: Error(s) in loading state_dict for Burstormer:
+        size mismatch for conv1.0.weight: copying a param with shape torch.Size([48, 3, 3, 3]) from checkpoint, the shape in current model is torch.Size([48, 4, 3, 3]).
+        size mismatch for up3.0.weight: copying a param with shape torch.Size([48, 48, 1, 1]) from checkpoint, the shape in current model is torch.Size([192, 48, 1, 1]).
+
+
 Traceback (most recent call last):
   File "/mnt/diskb/penglong/dx/code/SR/zff_track2_eva.py", line 14, in <module>
     from Network_Real_burstSR import Base_Model
