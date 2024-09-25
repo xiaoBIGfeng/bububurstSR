@@ -21,3 +21,9 @@ def flatten_rgb_to_bayer(im_rgb_3ch):
     im_bayer[1::2, 1::2] = im_rgb_3ch[0:, :, 2]  # B
 
     return im_bayer
+            im_bayer = torch.zeros((burst.shape[0],burst.shape[1],burst.shape[2],burst.shape[3] * 2, burst.shape[4] * 2), dtype=burst.dtype)
+            
+            im_bayer[0::2, 0::2] = burst[0:, :, 0]  # R
+            im_bayer[0::2, 1::2] = burst[0:, :, 1]  # G
+            im_bayer[1::2, 0::2] = burst[0:, :, 1]  # G
+            im_bayer[1::2, 1::2] = burst[0:, :, 2]  # B
