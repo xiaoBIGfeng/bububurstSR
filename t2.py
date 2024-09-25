@@ -1,15 +1,23 @@
+import numpy as np
 import torch
 
-# 假设你有一个形状为[1, 14, 3, 80, 80]的RGB张量，其中14是批量大小
-# 这里我们随机生成一个这样的张量作为示例
-rgb_tensor = torch.rand(1, 14, 3, 80, 80)
+def flatten_rgb_to_bayer(im_rgb_3ch):
+    '''
+    3 channels to RGGB bayer
+    '''
+    if isinstance(im_rgb_3ch, np.ndarray):
+        # 创建一个空的Bayer格式数组，大小是原图像的两倍
+        im_bayer = np.zeros((im_rgb_3ch.shape[0] * 2, im_rgb_3ch.shape[1] * 2), dtype=im_rgb_3ch.dtype)
+    elif isinstance(im_rgb_3ch, torch.Tensor):
+        # 创建一个空的Bayer格式张量，大小是原图像的两倍
+        im_bayer = torch.zeros((im_rgb_3ch.shape[1] * 2, im_rgb_3ch.shape[2] * 2), dtype=im_rgb_3ch.dtype)
+    else:
+        raise Exception("Input image must be either a numpy ndarray or a torch Tensor.")
 
-# 选择要复制的通道，例如复制绿色通道
-# 我们可以通过索引来选择绿色通道，并将其复制到新的通道
-green_channel = rgb_tensor[:, :, 1:2, :, :]  # 选择绿色通道，形状为[1, 14, 1, 80, 80]
+    # RGGB Bayer排列
+    im_bayer[0::2, 0::2] = im_rgb_3ch[0:, :, 0]  # R
+    im_bayer[0::2, 1::2] = im_rgb_3ch[0:, :, 1]  # G
+    im_bayer[1::2, 0::2] = im_rgb_3ch[0:, :, 1]  # G
+    im_bayer[1::2, 1::2] = im_rgb_3ch[0:, :, 2]  # B
 
-# 复制绿色通道来创建RGGB格式
-rggb_tensor = torch.cat((rgb_tensor, green_channel), dim=2)  # dim=2是通道维度
-
-# 现在rggb_tensor的形状应该是[1, 14, 4, 80, 80]
-print(rggb_tensor.shape)
+    return im_bayer
