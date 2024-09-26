@@ -1,4 +1,46 @@
-    model.load_state_dict(checkpoint["state_dict"])
+Traceback (most recent call last):
+  File "/mnt/diskb/penglong/dx/code/SR/zff_track2_fenxi.py", line 157, in <module>
+    BurstSR_Test_Network(args).test()
+  File "/mnt/diskb/penglong/dx/code/SR/zff_track2_fenxi.py", line 122, in test
+    PSNR_temp = self.aligned_psnr_fn(burst_rgb, labels, burst).cpu().numpy()
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/dx/code/SR/utils/metrics.py", line 332, in forward
+    psnr_all = [self.psnr(p.unsqueeze(0), g.unsqueeze(0), bi.unsqueeze(0)) for p, g, bi in zip(pred, gt, burst_input)]
+  File "/mnt/diskb/penglong/dx/code/SR/utils/metrics.py", line 332, in <listcomp>
+    psnr_all = [self.psnr(p.unsqueeze(0), g.unsqueeze(0), bi.unsqueeze(0)) for p, g, bi in zip(pred, gt, burst_input)]
+  File "/mnt/diskb/penglong/dx/code/SR/utils/metrics.py", line 324, in psnr
+    mse = self.l2(pred, gt, burst_input) + 1e-12
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/dx/code/SR/utils/metrics.py", line 218, in forward
+    flow = self.alignment_net(pred / (pred.max() + 1e-6), gt / (gt.max() + 1e-6))
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/dx/code/SR/pwcnet/pwcnet.py", line 278, in forward
+    flow = self.net(target_img_re, source_img_re)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/dx/code/SR/pwcnet/pwcnet.py", line 226, in forward
+    tenSecond = self.netExtractor(tenSecond)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/dx/code/SR/pwcnet/pwcnet.py", line 107, in forward
+    tenOne = self.netOne(tenInput)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/container.py", line 204, in forward
+    input = module(input)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1190, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/conv.py", line 463, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/conv.py", line 459, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Input type (torch.FloatTensor) and weight type (torch.cuda.FloatTensor) should be the same or input should be a MKLDNN tensor and weight is a dense tensor
+
+
+model.load_state_dict(checkpoint["state_dict"])
   File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1667, in load_state_dict
     raise RuntimeError('Error(s) in loading state_dict for {}:\n\t{}'.format(
 RuntimeError: Error(s) in loading state_dict for Burstormer:
