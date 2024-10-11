@@ -27,6 +27,22 @@ base: 29.201473
 11代2: 29.19955 False
 12代2: 29.20993 True
 13代2: 29.205656 True
+
+step 79 ：['001_0292']
+base: 35.72798
+0代1: 35.57646 False
+0代2: 35.88121 True
+0代3: 35.88059 True
+0代4: 35.928024 True
+0代5: 35.96012 True
+0代6: 35.936443 True
+0代7: 35.803867 True
+0代8: 35.91766 True
+0代9: 35.719765 False
+0代10: 35.843895 True
+0代11: 35.878582 True
+0代12: 35.93841 True
+0代13: 35.781376 True
 数据集dataset_manual 添加LR路径我改成了添加未对齐图片的路径
 OpenBLAS blas_thread_init: pthread_create failed for thread 3 of 64: Resource temporarily unavailable
 OpenBLAS blas_thread_init: RLIMIT_NPROC 3088023 current, 3088023 max
