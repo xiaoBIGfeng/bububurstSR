@@ -1,3 +1,36 @@
+            burst = val_batch['LR']
+            labels = val_batch['HR']
+            burst = burst.cuda()
+            labels = labels.cuda()
+            
+
+
+            with torch.no_grad():
+                output = model(burst)
+                output = output.clamp(0.0, 1.0)
+            PSNR_base = self.valid_psnr(output, labels).cpu().numpy()
+            print('base:',PSNR_base)
+            
+            # idx是否是最好的帧
+            best = []
+            for idx in range(0,14):
+                flag = 0
+                for j in range(1,14):
+
+                        
+                    burst2 = burst.cuda()
+                    burst2[:,j,:,:,:] = burst[:,idx,:,:,:]
+                    
+                    with torch.no_grad():
+                        output = model(burst2)
+                        output = output.clamp(0.0, 1.0)
+                    PSNR_temp = self.valid_psnr(output, labels).cpu().numpy()
+                    print(f'{idx}代{j}:',PSNR_temp,PSNR_temp>PSNR_base)
+                    if PSNR_temp>PSNR_base:
+                        flag += 1
+                if flag >=8:
+                    best.append(idx)
+            print(best)
 数据集dataset_manual 添加LR路径我改成了添加未对齐图片的路径
 OpenBLAS blas_thread_init: pthread_create failed for thread 3 of 64: Resource temporarily unavailable
 OpenBLAS blas_thread_init: RLIMIT_NPROC 3088023 current, 3088023 max
