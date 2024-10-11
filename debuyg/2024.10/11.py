@@ -2,6 +2,7 @@
 OpenBLAS blas_thread_init: pthread_create failed for thread 3 of 64: Resource temporarily unavailable
 OpenBLAS blas_thread_init: RLIMIT_NPROC 3088023 current, 3088023 max
 export OPENBLAS_NUM_THREADS=1
+libgomp: Thread creation failed: Resource temporarily unavailable
 ['029_0370'] 1535
 base: 27.589643
 2代1: 27.11208 False
