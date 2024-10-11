@@ -1,5 +1,6 @@
 数据集dataset_manual 添加LR路径我改成了添加未对齐图片的路径
-
+OpenBLAS blas_thread_init: pthread_create failed for thread 3 of 64: Resource temporarily unavailable
+OpenBLAS blas_thread_init: RLIMIT_NPROC 3088023 current, 3088023 max
 ['029_0370'] 1535
 base: 27.589643
 2代1: 27.11208 False
