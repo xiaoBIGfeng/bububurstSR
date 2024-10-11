@@ -1,36 +1,31 @@
-            burst = val_batch['LR']
-            labels = val_batch['HR']
-            burst = burst.cuda()
-            labels = labels.cuda()
-            
+['000_0436']
+base: 27.627237
+0代1: 27.735744 True
+0代2: 27.759449 True
+0代3: 27.744112 True
+0代4: 27.771463 True
+0代5: 27.762085 True
+0代6: 27.757471 True
+0代7: 27.755098 True
+0代8: 27.781427 True
+0代9: 27.766209 True
+0代10: 27.751596 True
+0代11: 27.728388 True
+0代12: 27.7718 True
+0代13: 27.583908 False
 
-
-            with torch.no_grad():
-                output = model(burst)
-                output = output.clamp(0.0, 1.0)
-            PSNR_base = self.valid_psnr(output, labels).cpu().numpy()
-            print('base:',PSNR_base)
-            
-            # idx是否是最好的帧
-            best = []
-            for idx in range(0,14):
-                flag = 0
-                for j in range(1,14):
-
-                        
-                    burst2 = burst.cuda()
-                    burst2[:,j,:,:,:] = burst[:,idx,:,:,:]
-                    
-                    with torch.no_grad():
-                        output = model(burst2)
-                        output = output.clamp(0.0, 1.0)
-                    PSNR_temp = self.valid_psnr(output, labels).cpu().numpy()
-                    print(f'{idx}代{j}:',PSNR_temp,PSNR_temp>PSNR_base)
-                    if PSNR_temp>PSNR_base:
-                        flag += 1
-                if flag >=8:
-                    best.append(idx)
-            print(best)
+6代1: 27.633244 True
+6代2: 27.62786 True
+6代3: 27.63412 True
+6代4: 27.63491 True
+6代5: 27.640564 True
+6代7: 27.634361 True
+6代8: 27.637035 True
+6代9: 27.6403 True
+6代10: 27.628813 True
+6代11: 27.630331 True
+6代12: 27.634285 True
+6代13: 27.43905 False
 数据集dataset_manual 添加LR路径我改成了添加未对齐图片的路径
 OpenBLAS blas_thread_init: pthread_create failed for thread 3 of 64: Resource temporarily unavailable
 OpenBLAS blas_thread_init: RLIMIT_NPROC 3088023 current, 3088023 max
