@@ -1,3 +1,7 @@
+>conda config --set proxy_servers.http http://proxy.huawei.com:8080
+>conda config --set proxy_servers.https http://proxy.huawei.com:8080
+>conda config --set proxy_servers.ssl_verify fals
+
 Collecting package metadata (current_repodata.json): failed
 
 CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64/current_repodata.json>
