@@ -1,3 +1,11 @@
+Collecting package metadata (current_repodata.json): failed
+
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64/current_repodata.json>
+Elapsed: -
+
+An HTTP error occurred when trying to retrieve this URL.
+HTTP errors are often intermittent, and a simple retry will get you on your way.
+'https//mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/linux-64'
 Retrieving notices: ...working... ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='mirrors.tuna.tsinghua.edu.cn', port=443): Max retries exceeded with url: /anaconda/pkgs/free/notices.json (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Parent proxy unreacheable')))> for channel: anaconda/pkgs/free url: https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/notices.json
 ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/main/notices.json (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Parent proxy unreacheable')))> for channel: defaults url: https://repo.anaconda.com/pkgs/main/notices.json
 ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/r/notices.json (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Parent proxy unreacheable')))> for channel: defaults url: https://repo.anaconda.com/pkgs/r/notices.json
