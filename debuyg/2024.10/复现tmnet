@@ -1,0 +1,16 @@
+在cd $ROOT/data
+python generate_frames_from_adobe240fps.py
+
+48 5 93
+Unable to stop the stream: Inappropriate ioctl for device
+Traceback (most recent call last):
+  File "generate_frames_from_adobe240fps.py", line 53, in <module>
+    frame = np.transpose(frame, (0, 1, 2))
+  File "<__array_function__ internals>", line 6, in transpose
+  File "/mnt/diskb/penglong/anaconda3/envs/zoomslow/lib/python3.6/site-packages/numpy/core/fromnumeric.py", line 653, in transpose
+    return _wrapfunc(a, 'transpose', axes)
+  File "/mnt/diskb/penglong/anaconda3/envs/zoomslow/lib/python3.6/site-packages/numpy/core/fromnumeric.py", line 55, in _wrapfunc
+    return _wrapit(obj, method, *args, **kwds)
+  File "/mnt/diskb/penglong/anaconda3/envs/zoomslow/lib/python3.6/site-packages/numpy/core/fromnumeric.py", line 44, in _wrapit
+    result = getattr(asarray(obj), method)(*args, **kwds)
+ValueError: axes don't match array
