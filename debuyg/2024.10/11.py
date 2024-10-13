@@ -1,3 +1,17 @@
+Retrieving notices: ...working... ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='mirrors.tuna.tsinghua.edu.cn', port=443): Max retries exceeded with url: /anaconda/pkgs/free/notices.json (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Parent proxy unreacheable')))> for channel: anaconda/pkgs/free url: https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/notices.json
+ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/main/notices.json (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Parent proxy unreacheable')))> for channel: defaults url: https://repo.anaconda.com/pkgs/main/notices.json
+ERROR conda.notices.fetch:get_channel_notice_response(68): Request error <HTTPSConnectionPool(host='repo.anaconda.com', port=443): Max retries exceeded with url: /pkgs/r/notices.json (Caused by ProxyError('Cannot connect to proxy.', OSError('Tunnel connection failed: 502 Parent proxy unreacheable')))> for channel: defaults url: https://repo.anaconda.com/pkgs/r/notices.json
+done
+Collecting package metadata (current_repodata.json): failed
+
+ProxyError: Conda cannot proceed due to an error in your proxy configuration.
+Check for typos and other configuration errors in any '.netrc' file in your home directory,
+any environment variables ending in '_PROXY', and any other system-wide proxy
+configuration settings.
+
+
+
+
 ['001_0291']
 base: 29.201473
 0代1: 29.301529 True
