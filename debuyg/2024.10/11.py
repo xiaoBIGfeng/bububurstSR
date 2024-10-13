@@ -1,3 +1,6 @@
+可用的解决方案
+https://3ms.huawei.com/km/blogs/details/14766431
+
 >conda config --set proxy_servers.http http://proxy.huawei.com:8080
 >conda config --set proxy_servers.https http://proxy.huawei.com:8080
 >conda config --set proxy_servers.ssl_verify fals
