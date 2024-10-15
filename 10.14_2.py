@@ -7,3 +7,4 @@
   File "/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/nn/modules/linear.py", line 114, in forward
     return F.linear(input, self.weight, self.bias)
 RuntimeError: mat1 and mat2 shapes cannot be multiplied (14x110592 and 7077888x1)
+Epoch 25:   2%|█▎                                                                          | 900/51655 [07:01<6:36:35,  2.13it/s, loss=0.00562, v_num=99, val_psnr=39.50]
