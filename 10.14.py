@@ -308,6 +308,7 @@ class BFA(nn.Module):
 
 
     def forward(self, x):
+        
         x = x + self.channel_attn(self.norm1(x))
         x = x + self.channel_ffn(self.norm2(x))
         x = x + self.spatial_attn(self.norm3(x))
@@ -551,10 +552,11 @@ class Base_Model(pl.LightningModule):
         
         self.out_conv = nn.Sequential(nn.Conv2d(num_features, 3, kernel_size=3, padding=1, bias=bias)) 
 
-        self.adapt_brust_pool = adapt_burst_pooling(num_features, 8)    
-        self.my_pool = nn.Sequential(*[BFA(dim=84, window_size = 4, overlap_ratio=0.5,  num_channel_heads=1, num_spatial_heads=4, 
-                                                  spatial_dim_head = 16, ffn_expansion_factor=2.66, bias=bias, LayerNorm_type='WithBias') for i in range(1)])
-        self.poolconv = nn.Conv2d(84,48,3,1,1)
+        # self.adapt_brust_pool = adapt_burst_pooling(num_features, 8)
+            
+            
+        self.fc = nn.Linear(110592,1)    
+
         PWCNet_weight_PATH = './pwcnet/pwcnet-network-default.pth'
         self.pwcnet_path = PWCNet_weight_PATH
         self.alignment_net = PWCNet(load_pretrained=True, weights_path=self.pwcnet_path).cuda()
@@ -575,10 +577,16 @@ class Base_Model(pl.LightningModule):
             burst_feat = burst[i]
             burst_feat = self.conv1(burst_feat) # b*t num_features h w
             burst_feat = self.align(burst_feat)
+            # print('+++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            # print(burst_feat.shape)
+            burst_feat_flatten = burst_feat.view(n, -1)
+
+            x_fc = self.fc(burst_feat_flatten)
+            prob = torch.sigmoid(x_fc)
+            _, indices = torch.topk(prob.view(-1), k=8, dim=0)
+            select_frame = torch.index_select(burst_feat, 0, indices)
+            burst_feat = select_frame.view(8, 48, h, w)
             
-            burst_feat = burst_feat.view(8,-1,h,w)
-            burst_feat = self.my_pool(burst_feat)
-            burst_feat = self.poolconv(burst_feat)
             # burst_feat = self.adapt_brust_pool(burst_feat)
             alligned_feature.append(burst_feat)
 
@@ -604,40 +612,30 @@ class Base_Model(pl.LightningModule):
         burst_feat = self.up3(burst_feat) 
         burst_feat = self.out_conv(burst_feat)        
         return burst_feat
-    
-    def training_step(self, train_batch, batch_idx):
-        
-        #########################################  Torchlighting ########################### 
-        x, y, meta_info_burst, meta_info_gt, burst_name = train_batch
 
+    def training_step(self, train_batch, batch_idx):
+        x, y, flow_vectors, meta_info = train_batch
         pred = self.forward(x)
         pred = pred.clamp(0.0, 1.0)
-        # print("pred shape:", pred.shape)
-        # print("y shape:", y.shape)
-
-
-        # print("x device:", x.device)
-        # print("y device:", y.device)
-        # print("pred device:", pred.device)
-        loss = self.aligned_l1_loss(pred, y, x) + 0.0095*self.alignedLPIPS_loss(pred, y, x)
-        # loss = self.train_loss(pred, y)
-        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+        loss = self.train_loss(pred, y)
+        self.log('train_loss', loss, on_step=True, on_epoch=True)
         return loss
 
     def validation_step(self, val_batch, batch_idx):
-        with torch.no_grad():
-            x, y, meta_info_burst, meta_info_gt, burst_name = val_batch
-            pred = self.forward(x)
-            pred = pred.clamp(0.0, 1.0)
-            PSNR = self.aligned_psnr_fn(pred, y , x)
-
+        x, y, flow_vectors, meta_info = val_batch
+        pred = self.forward(x)
+        pred = pred.clamp(0.0, 1.0)
+        PSNR = self.valid_psnr(pred, y)
         return PSNR
 
     def validation_epoch_end(self, outs):
         # outs is a list of whatever you returned in `validation_step`
         PSNR = torch.stack(outs).mean()
+        
+        with open('./1014_2.txt','a') as file:
+            file.write(f'val_psnr:{PSNR}\n')
+            
         self.log('val_psnr', PSNR, on_step=False, on_epoch=True, prog_bar=True)
-        torch.cuda.empty_cache()
 
     def configure_optimizers(self):        
         optimizer = torch.optim.AdamW(self.parameters(), lr=3e-4)
@@ -652,30 +650,3 @@ class Base_Model(pl.LightningModule):
 
     def optimizer_zero_grad(self, epoch, batch_idx, optimizer, optimizer_idx):
         optimizer.zero_grad(set_to_none=True)
-    
-    def on_load_checkpoint(self, checkpoint):
-        # 再次冻结alignment_net参数以确保其保持不动
-        print("on_load_checkpoint")
-        for param in self.alignment_net.parameters():
-            param.requires_grad = False
-
-if __name__ == '__main__':
-    import torch
-    B = 14  
-    H = 32  
-    W = 32  
-    frames = torch.rand(1, B, 4, H, W).cuda()
-    # print(frames)
-    model = Base_Model().cuda()
-    model.eval()
-    image = model(frames)
-    print('image.shape:',image.shape)
-
-    # x = torch.rand(10,4,32,32)
-    # ref = x[0:1]
-    # print(ref.shape)
-    # ref = ref.unsqueeze(0)
-    # print(ref.shape)
-    # ref = torch.repeat_interleave(ref, B, dim=0)
-    # print(ref.shape)
-
