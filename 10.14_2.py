@@ -1,0 +1,6 @@
+            burst_feat_flatten = burst_feat.view(n, -1)
+            x_fc = self.fc(burst_feat_flatten)
+            prob = torch.sigmoid(x_fc)
+            _, indices = torch.topk(prob.view(-1), k=8, dim=0)
+            select_frame = torch.index_select(burst_feat, 0, indices)
+            burst_feat = select_frame.view(8, 48, h, w)
