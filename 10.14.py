@@ -12,3 +12,8 @@ good_ratio = good_rows.sum() / len(df)
 print(f"好行的比例为: {good_ratio:.2%}")
 =IF(MAX(C2:O2) > B2, 1, 0)
 =SUM(P2:P2225) / (COUNTA(B2:B2225))
+
+=INDEX(C$1:O$1, MATCH(MAX(C2:O2), C2:O2, 0))
+=MAX(C2:O2) - B2
+=IF(MAX(C2:O2) > B2, 1, 0)
+=AVERAGEIF(R2:R2225, 1, Q2:Q2225)
