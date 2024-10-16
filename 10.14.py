@@ -14,3 +14,4 @@ print(f"好行的比例为: {good_ratio:.2%}")
 =SUM(P2:P2225) / (COUNTA(B2:B2225))
 =MAX(C2:O2) - B2
 =AVERAGEIF(R2:R2225, ">0")
+=COUNTIFS(MIN(D2:D883,G2:G883,J2:J883),"<=0")
