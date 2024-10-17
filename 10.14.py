@@ -22,3 +22,4 @@ print(f"好行的比例为: {good_ratio:.2%}")
 10.16：
 =MIN(D:D, G:G, J:J)
 =AVERAGEIF((D:D, G:G, J:J), "<0")
+=AVERAGE(IF((D:D<0) + (G:G<0) + (J:J<0), (D:D, G:G, J:J)))
