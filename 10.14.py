@@ -18,3 +18,7 @@ print(f"好行的比例为: {good_ratio:.2%}")
 =SUMPRODUCT(--(MIN(D2:D883, G2:G883, J2:J883) <= 0))
 =SUMPRODUCT(--((D2:D883<=0) + (G2:G883<=0) + (J2:J883<=0) > 0))
 =SUMPRODUCT((D1:D1000<0) + (G1:G1000<0) + (J1:J1000<0)) / (ROWS(D1:D1000) * 3)
+
+10.16：
+=MIN(IF(D:D<0, D:D))
+=AVERAGEIF(D:D, "<0")
