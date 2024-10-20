@@ -1,1 +1,7 @@
 python main.py --dir_data /mnt/diskb/penglong/zzff/Pretrained-IPT-main/data/dataset --pretrain /mnt/diskb/penglong/zzff/Pretrained-IPT-main/IPT_sr4.pt --data_test Set5+Set14+Urban100+Manga109+B100 --scale 4 --test_only --save_results
+python main.py --dir_data /mnt/diskb/penglong/zzff/Pretrained-IPT-main/data/dataset --pretrain /mnt/diskb/penglong/zzff/RCAN-master/RCAN_TestCode/model/RCAN_BIX4.pt --data_test Set5+Set14+Urban100+Manga109+B100 --scale 4 --test_only --save_results
+  File "/mnt/diskb/penglong/zzff/RCAN-master/RCAN_TestCode/code/data/__init__.py", line 3, in <module>
+    from dataloader import MSDataLoader
+  File "/mnt/diskb/penglong/zzff/RCAN-master/RCAN_TestCode/code/dataloader.py", line 10, in <module>
+    from torch._C import _set_worker_signal_handlers, _update_worker_pids, \
+ImportError: cannot import name '_update_worker_pids' from 'torch._C' (/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/_C.cpython-39-x86_64-linux-gnu.so)
