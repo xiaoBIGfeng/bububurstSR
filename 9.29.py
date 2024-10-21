@@ -5,3 +5,8 @@ python main.py --dir_data /mnt/diskb/penglong/zzff/Pretrained-IPT-main/data/data
   File "/mnt/diskb/penglong/zzff/RCAN-master/RCAN_TestCode/code/dataloader.py", line 10, in <module>
     from torch._C import _set_worker_signal_handlers, _update_worker_pids, \
 ImportError: cannot import name '_update_worker_pids' from 'torch._C' (/mnt/diskb/penglong/anaconda3/envs/dx9826/lib/python3.9/site-packages/torch/_C.cpython-39-x86_64-linux-gnu.so)
+
+python main.py --data_test Set5 --scale 4 --model RCAN --n_resgroups 10 --n_resblocks 20 --n_feats 64 --pre_train ../model/RCAN_BIX4.pt --test_only --save_results --chop --save 'RCAN' --testpath ../LR/LRBI --testset Set5
+
+    from torch.utils.data.dataloader import _worker_manager_loop
+ImportError: cannot import name '_worker_manager_loop'
